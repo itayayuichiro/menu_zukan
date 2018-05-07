@@ -45,7 +45,7 @@ return [
             'database' => 'kensyu',
             'username' => 'root',
             'password' => '',
-            'unix_socket' =>'',
+            'unix_socket' => '',
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',

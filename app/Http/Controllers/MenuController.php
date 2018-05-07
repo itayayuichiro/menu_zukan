@@ -14,7 +14,8 @@ class MenuController extends Controller
      * @return \Illuminate\Http\Response
      */
 //    public $columns = ['id','name','description','price','image_base64'];
-    public $columns = ['id','name','description','price'];
+    public $columns = ['id', 'name', 'description', 'price'];
+
     public function index()
     {
         return response(Menu::all($this->columns));
@@ -34,7 +35,7 @@ class MenuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -49,12 +50,12 @@ class MenuController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return (Menu::where(['id'=>$id])->select($this->columns)->first());
+        return (Menu::where(['id' => $id])->select($this->columns)->first());
 
 //        return response(Menu::find($id));
         //
@@ -64,13 +65,13 @@ class MenuController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $menu =  Menu::where(['id'=>$id])->first();
+        $menu = Menu::where(['id' => $id])->first();
         $menu->name = $request->name;
         $menu->description = $request->description;
         $menu->price = $request->price;
@@ -81,18 +82,19 @@ class MenuController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $menu =  Menu::where(['id'=>$id])->first();
+        $menu = Menu::where(['id' => $id])->first();
         $menu->delete();
         return response(Menu::find($id));
     }
+
     public function search()
     {
-        return response(Menu::where('name', 'LIKE', "%".$_GET['keyword']."%")->select($this->columns)->get());
+        return response(Menu::where('name', 'LIKE', "%" . $_GET['keyword'] . "%")->select($this->columns)->get());
     }
 
 }
