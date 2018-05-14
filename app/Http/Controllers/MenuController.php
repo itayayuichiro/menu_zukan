@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Menu;
+use Illuminate\Support\Facades\Input;
 
 
 class MenuController extends Controller
@@ -56,8 +57,8 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $menu = Menu::findOrFail($id)->first();
-        $menu->fill($request->all())->save();
+        $menu = Menu::findOrFail($id);
+        $menu->fill(Input::all())->save();
         return response(array('result' => 'success'));
     }
 
