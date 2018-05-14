@@ -25,12 +25,12 @@
 ### Route
 | Method    | path          | 機能          | アクション                                      | Middleware   |
 |-----------|--------------|---------------|---------------------------------------------|--------------|
-| GET  | /menus        | 一覧表示   | MenuController@index   | web          |
-| POST      | /menus        | 商品の登録   | MenuController@store   | web          |
-| GET  | /menus/search | 商品の検索     | MenuController@search  | web          |
-| GET  | /menus/{menu} | 詳細表示    | MenuController@show    | web          |
-| PUT or PATCH | /menus/{menu} | 商品更新  | MenuController@update  | web          |
-| DELETE    | /menus/{menu} | 商品削除 | MenuController@destroy | web   |
+| GET  | /api/menus        | 一覧表示   | MenuController@index   | web          |
+| POST      | /api/menus        | 商品の登録   | MenuController@store   | web          |
+| GET  | /api/menus/search | 商品の検索     | MenuController@search  | web          |
+| GET  | /api/menus/{menu} | 詳細表示    | MenuController@show    | web          |
+| PUT or PATCH | /api/menus/{menu} | 商品更新  | MenuController@update  | web          |
+| DELETE    | /api/menus/{menu} | 商品削除 | MenuController@destroy | web   |
 
 
 ### リクエスト/レスポンス例
@@ -38,14 +38,14 @@
 #### 一覧表示
 
 **URL**
-/menus
+/api/menus
 
 **メソッド**
 GET
 
 **リクエスト**
 ```
-curl --request GET \  --url http://localhost:8080/menus
+curl --request GET \  --url http://localhost:8080/api/menus
 ```
 
 **レスポンス**
@@ -80,7 +80,7 @@ curl --request GET \  --url http://localhost:8080/menus
 #### 商品の登録
 
 **URL**
-/menus
+/api/menus
 
 **メソッド**
 POST
@@ -88,7 +88,7 @@ POST
 リクエスト
 ```
 curl --request POST \
-  --url http://localhost:8080/menus \
+  --url http://localhost:8080/api/menus \
   --header 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
   --form 'title=新メニュー（豆）' \
   --form 'description=美味しい豆' \
@@ -125,7 +125,7 @@ curl --request POST \
 
 #### 商品の検索
 **URL**
-/menus/search
+/api/menus/search
 
 **メソッド**
 GET
@@ -133,7 +133,7 @@ GET
 **リクエスト**
 ```
 curl --request GET \
-  --url 'http://localhost:8080/menus/search?keyword=%E7%84%BC'
+  --url 'http://localhost:8080/api/menus/search?keyword=%E7%84%BC'
 ```
 * keyword:検索したいワード
 
@@ -185,7 +185,7 @@ curl --request GET \
 
 #### 商品削除
 **URL**
-/menus/{id}
+/api/menus/{id}
 
 **メソッド**
 DELETE
@@ -193,7 +193,7 @@ DELETE
 **リクエスト**
 ```
 curl --request DELETE \
-  --url http://localhost:8080/menus/126
+  --url http://localhost:8080/api/menus/126
 ```
 * id:削除したい商品のID
 
@@ -250,7 +250,7 @@ curl --request GET \
 #### 商品の更新
 
 **URL**
-/menus/{id}
+/api/menus/{id}
 
 **メソッド**
 POST
@@ -258,7 +258,7 @@ POST
 リクエスト
 ```
 curl --request POST \
-  --url http://localhost:8080/menus \
+  --url http://localhost:8080/api/menus \
   --header 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
   --form 'title=新メニュー（豆）' \
   --form 'description=美味しい豆' \
@@ -332,5 +332,5 @@ http://kensyu.jeez.jp/
 **例**
 
 商品の一覧
-http://kensyu.jeez.jp/menus
+http://kensyu.jeez.jp/api/menus
 

@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/menus/search', 'MenuController@search');
-
-Route::resource('/menus', 'MenuController', ['only' => ['index', 'show', 'update', 'store', 'destroy']]);
 //Route::resource('hoge', 'HogeController', ['only' => ['index', 'create', 'edit', 'store', 'destroy']]);
 
 

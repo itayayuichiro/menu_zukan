@@ -16,3 +16,6 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+Route::get('/menus/search', 'MenuController@search');
+
+Route::resource('/menus', 'MenuController', ['only' => ['index', 'show', 'update', 'store', 'destroy']]);
