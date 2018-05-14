@@ -46,8 +46,27 @@ class Handler extends ExceptionHandler
      * @param  \Exception $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Exception $e)
     {
-        return parent::render($request, $exception);
+        //IDがなかった場合のエラー
+        if ($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) return response(array('result' => 'error', 'message' => 'ID not found'));
+        //DB保存の際のエラー
+        if ($e instanceof \Illuminate\Database\QueryException) return response(array('result' => 'error', 'message' => $e));
+
+        if ($this->isHttpException($e)) {
+            if ($e->getStatusCode() == 403) {
+                return response()->view('errors.403');
+            }
+            // 404
+            if ($e->getStatusCode() == 404) {
+                return response("sss");
+            }
+        }
+        return parent::render($request, $e);
+        // return print_r(($this);
+
+//         // 500
+//         return response('ss');
+        // }
     }
 }
