@@ -257,13 +257,11 @@ PUT or PATCH
 
 リクエスト
 ```
-curl --request POST \
-  --url http://localhost:8080/api/menus \
-  --header 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
-  --form 'title=新メニュー（豆）' \
-  --form 'description=美味しい豆' \
-  --form price=100 \
-  --form 'image_base64=/9j/4AAQSkZJRgABAgAAZABkAAD/7AARRHVja3kAAQAEAAAAUgAA/+4AJkFk...'
+curl --request PATCH \
+  --url http://localhost:8080/api/menus/73 \
+  --header 'Content-Type: application/x-www-form-urlencoded' \
+  --header 'csrf_token: ' \
+  --data 'title=(%E6%96%B0)%E6%A2%85%E9%85%922s&description=%E6%96%B0%E3%81%97%E3%81%8F%E3%81%AA%E3%81%A3%E3%81%9F%E6%A2%85%E9%85%92&price=20&image_base64=%2F9j%2F4AAQSkZJR...D%0A'
 ```
 
 * title:商品タイトル商品画像(最大100文字)
