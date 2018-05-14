@@ -13,7 +13,8 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public $columns = ['id','title','description','price','image_base64'];
+    public $columns = ['id', 'title', 'description', 'price', 'image_base64'];
+
     // public $columns = ['id', 'title', 'description', 'price'];
 
     public function index()
