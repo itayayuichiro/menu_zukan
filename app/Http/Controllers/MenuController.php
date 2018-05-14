@@ -29,18 +29,9 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-            $menu = new Menu;
-            $menu->title = $request->title;
-            $menu->description = $request->description;
-            $menu->price = $request->price;
-            // $menu->image_base64 = base64_encode($request->image_base64);
-            $menu->image_base64 = $request->image_base64;
-            $menu->save();
-            return response(array('result'=>'success'));
-        }catch (\Exception $e) {
-            return response(array('result'=>'error','message'=>$e));
-        }
+        $menu = new Menu;
+        $menu->fill($request->all())->save();
+        return response(array('result' => 'success'));
     }
 
     /**
@@ -51,11 +42,7 @@ class MenuController extends Controller
      */
     public function show($id)
     {
-        if (empty(Menu::where(['id' => $id])->select($this->columns)->first())) {
-            return response(array('result'=>'error','message'=>'ID not found'));
-        }else{
-            return (Menu::where(['id' => $id])->select($this->columns)->first());
-        }
+        return (Menu::findOrFail($id)->select($this->columns)->first());
     }
 
 
@@ -68,19 +55,9 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
-            $menu = Menu::where(['id' => $id])->first();
-            $menu->title = $request->title;
-            $menu->description = $request->description;
-            $menu->price = $request->price;
-            $menu->image_base64 = $request->image_base64;
-            $menu->save();
-            return response(array('result'=>'success'));
-        }catch (\Exception $e) {
-            return response(array('result'=>'error','message'=>$e));
-        }
-
-
+        $menu = Menu::findOrFail($id)->first();
+        $menu->fill($request->all())->save();
+        return response(array('result' => 'success'));
     }
 
     /**
@@ -91,18 +68,14 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        if (empty(Menu::where(['id' => $id])->select($this->columns)->first())) {
-            return response(array('result'=>'error','message'=>'ID not found'));
-        }else{
-            $menu = Menu::where(['id' => $id])->first();
-            $menu->delete();
-            return response(array('result'=>'success'));
-        }
+        $menu = Menu::findOrFail($id)->first();
+        $menu->delete();
+        return response(array('result' => 'success'));
     }
 
     public function search()
     {
-        return response(Menu::where('title', 'LIKE', "%" . $_GET['keyword'] . "%")->select($this->columns)->get());
+        return response(Menu::where('title', 'LIKE', "%" . $_GET['keyword'] . "%")->orWhere('description', 'LIKE', "%" . $_GET['keyword'] . "%")->select($this->columns)->get());
     }
 
 }
