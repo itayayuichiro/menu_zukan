@@ -213,11 +213,11 @@ curl --request DELETE \
 * result:登録に成功したか(成功: success,失敗: error)
 * message:失敗した理由
 
-#### menus/show/{id}(詳細表示)
+#### menus/{id}(詳細表示)
 リクエスト例
 ```
 curl --request GET \
-  --url http://localhost:8080/menus/2
+  --url http://localhost:8080/api/menus/2
 ```
 
 レスポンス(成功)
@@ -253,7 +253,7 @@ curl --request GET \
 /api/menus/{id}
 
 **メソッド**
-POST
+PUT or PATCH
 
 リクエスト
 ```
