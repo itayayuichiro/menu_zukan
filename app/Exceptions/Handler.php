@@ -53,15 +53,15 @@ class Handler extends ExceptionHandler
         //DB保存の際のエラー
         if ($e instanceof \Illuminate\Database\QueryException) return response(array('result' => 'error', 'message' => $e));
 
-        if ($this->isHttpException($e)) {
-            if ($e->getStatusCode() == 403) {
-                return response()->view('errors.403');
-            }
-            // 404
-            if ($e->getStatusCode() == 404) {
-                return response("sss");
-            }
-        }
+        // if ($this->isHttpException($e)) {
+        //     if ($e->getStatusCode() == 403) {
+        //         return response()->view('errors.403');
+        //     }
+        //     // 404
+        //     if ($e->getStatusCode() == 404) {
+        //         return response("sss");
+        //     }
+        // }
         return parent::render($request, $e);
         // return print_r(($this);
 
