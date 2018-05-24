@@ -14,13 +14,10 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public $columns = ['id', 'title', 'description', 'price', 'image_base64'];
-
-    // public $columns = ['id', 'title', 'description', 'price'];
 
     public function index()
     {
-        return response(Menu::all($this->columns));
+        return response(Menu::all(Menu::publishableFields()));
     }
 
     /**
@@ -44,7 +41,7 @@ class MenuController extends Controller
      */
     public function show($id)
     {
-        return (Menu::findOrFail($id)->select($this->columns)->first());
+        return (Menu::findOrFail($id)->select(Menu::publishableFields())->first());
     }
 
 
@@ -77,7 +74,7 @@ class MenuController extends Controller
 
     public function search()
     {
-        return response(Menu::where('title', 'LIKE', "%" . $_GET['keyword'] . "%")->orWhere('description', 'LIKE', "%" . $_GET['keyword'] . "%")->select($this->columns)->get());
+        return response(Menu::searchByKeyword($_GET['keyword']));
     }
 
 }
