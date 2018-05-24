@@ -36,7 +36,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-        parent::report($exception);
+        \Log::ERROR('ERROR LOG', ['action' => \Route::getCurrentRoute()->getActionName(), 'error' => $exception]);
     }
 
     /**
