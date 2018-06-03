@@ -22,8 +22,7 @@ class Menu extends Model
 
     protected static function findRecord($id)
     {
-
-        return Menu::findOrFail($id)->select(Menu::publishableFields())->first();
+        return Menu::select(Menu::publishableFields())->findOrFail($id);
     }
 
     protected static function updateRecord($request, $id)
