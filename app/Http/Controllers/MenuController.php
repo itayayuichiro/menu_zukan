@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Menu;
+use App\Formatter;
 use Illuminate\Support\Facades\Input;
 
 
@@ -17,7 +18,7 @@ class MenuController extends Controller
 
     public function index()
     {
-        return response(Menu::all(Menu::publishableFields()));
+        return Formatter::responseJSON(Menu::findAll());
     }
 
     /**
@@ -28,9 +29,7 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $menu = new Menu;
-        $menu->fill($request->all())->save();
-        return response(array('result' => 'success'));
+        return Formatter::responseJSON(Menu::createRecord($request->all()));
     }
 
     /**
@@ -41,7 +40,7 @@ class MenuController extends Controller
      */
     public function show($id)
     {
-        return (Menu::findOrFail($id)->select(Menu::publishableFields())->first());
+        return Formatter::responseJSON(Menu::findRecord($id));
     }
 
 
@@ -54,9 +53,7 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $menu = Menu::findOrFail($id);
-        $menu->fill(Input::all())->save();
-        return response(array('result' => 'success'));
+        return Formatter::responseJSON(Menu::updateRecord($request, $id));
     }
 
     /**
@@ -67,14 +64,12 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        $menu = Menu::findOrFail($id)->first();
-        $menu->delete();
-        return response(array('result' => 'success'));
+        return Formatter::responseJSON(Menu::deleteRecord($id));
     }
 
     public function search()
     {
-        return response(Menu::searchByKeyword($_GET['keyword']));
+        return Formatter::responseJSON(Menu::searchByKeyword($_GET['keyword']));
     }
 
 }
