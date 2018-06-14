@@ -53,7 +53,7 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return Formatter::responseJSON(Menu::updateRecord($request, $id));
+        return Formatter::responseJSON(Menu::updateRecord($request->all(), $id));
     }
 
     /**

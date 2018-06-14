@@ -8,19 +8,19 @@ class Menu extends Model
 {
     protected $fillable = ['title', 'description', 'price', 'image_base64'];
 
-    protected static function findAll()
+    public static function findAll()
     {
         return Menu::all(Menu::publishableFields());
     }
 
-    protected static function createRecord($request)
+    public static function createRecord($input)
     {
         $menu = new Menu;
         $menu->fill($request)->save();
         return true;
     }
 
-    protected static function findRecord($id)
+    public static function findRecord($id)
     {
         return Menu::select(Menu::publishableFields())->findOrFail($id);
     }
@@ -32,7 +32,7 @@ class Menu extends Model
         return true;
     }
 
-    protected static function deleteRecord($id)
+    public static function deleteRecord($id)
     {
 
         $menu = Menu::findOrFail($id)->first();
@@ -41,12 +41,12 @@ class Menu extends Model
     }
 
 
-    protected static function publishableFields()
+    private static function publishableFields()
     {
         return array_merge(['id'], (new static)->fillable);
     }
 
-    protected static function searchByKeyword($keyword)
+    public static function searchByKeyword($keyword)
     {
         return Menu::where('title', 'LIKE', "%" . $keyword . "%")->orWhere('description', 'LIKE', "%" . $keyword . "%")->select(Menu::publishableFields())->get();
     }
