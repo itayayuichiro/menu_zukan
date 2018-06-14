@@ -16,7 +16,7 @@ class Menu extends Model
     public static function createRecord($input)
     {
         $menu = new Menu;
-        $menu->fill($request)->save();
+        $menu->fill($input)->save();
         return true;
     }
 
@@ -25,10 +25,10 @@ class Menu extends Model
         return Menu::select(Menu::publishableFields())->findOrFail($id);
     }
 
-    protected static function updateRecord($request, $id)
+    public static function updateRecord($input, $id)
     {
         $menu = Menu::findOrFail($id);
-        $menu->fill($request->all())->save();
+        $menu->fill($input)->save();
         return true;
     }
 
