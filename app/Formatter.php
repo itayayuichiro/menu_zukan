@@ -2,23 +2,35 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Formatter extends Model
+trait FormatterTrait
 {
-
-    public static function responseJSON($data)
+    public static function boolToJSON($data)
     {
-        if (gettype($data) == 'boolean') {
-            if ($data == true) {
-                return response(array('result' => 'success'));
-            } else {
-                return response(array('result' => 'failure'));
-            }
-        } else if (gettype($data) == 'object' || gettype($data) == 'array') {
-            return response($data);
+        if ($data == true) {
+            return response(array('result' => 'success'));
+        } else {
+            return response(array('result' => 'failure'));
         }
     }
 
+    public static function objectToJSON($data)
+    {
+        return response($data);
+    }
+}
 
+class Formatter
+{
+    use FormatterTrait;
+
+    public static function responseJSON($data)
+    {
+        switch (gettype($data)) {
+            case 'boolean':
+                return Formatter::boolToJSON($data);
+            case 'object':
+            case 'array':
+                return Formatter::objectToJSON($data);
+        }
+    }
 }
