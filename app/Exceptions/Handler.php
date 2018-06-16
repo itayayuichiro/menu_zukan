@@ -2,12 +2,13 @@
 
 namespace App\Exceptions;
 
-use App\Formatter;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use App\Http\Formatter;
 
 class Handler extends ExceptionHandler
 {
+    use Formatter;
     /**
      * A list of the exception types that are not reported.
      *
@@ -51,27 +52,10 @@ class Handler extends ExceptionHandler
     {
         //IDがなかった場合のエラー
         if ($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
-//            return Formatter::responseJSON(array('result' => 'error', 'message' => 'ID not found'));    
-            //Formatter::sample(array('result' => 'error', 'message' => 'ID not found'));
-            return Formatter::responseJSON(array('result' => 'error', 'message' => 'ID not found'));
+            return $this->reponseErrorJSON('ID not found');
         }
         //DB保存の際のエラー
-        if ($e instanceof \Illuminate\Database\QueryException) return Formatter::responseJSON(array('result' => 'error', 'message' => $e));
-
-        // if ($this->isHttpException($e)) {
-        //     if ($e->getStatusCode() == 403) {
-        //         return response()->view('errors.403');
-        //     }
-        //     // 404
-        //     if ($e->getStatusCode() == 404) {
-        //         return response("sss");
-        //     }
-        // }
+        if ($e instanceof \Illuminate\Database\QueryException) return $this->reponseErrorJSON($e);
         return parent::render($request, $e);
-        // return print_r(($this);
-
-//         // 500
-//         return response('ss');
-        // }
     }
 }

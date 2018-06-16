@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Menu;
-use App\Formatter;
 use Illuminate\Support\Facades\Input;
+use App\Http\Formatter;
 
 
 class MenuController extends Controller
 {
+    use Formatter;
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +19,7 @@ class MenuController extends Controller
 
     public function index()
     {
-        return Formatter::responseJSON(Menu::findAll());
+        return $this->responseJSON(Menu::findAll());
     }
 
     /**
@@ -29,7 +30,7 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        return Formatter::responseJSON(Menu::createRecord($request->all()));
+        return $this->responseJSON(Menu::createRecord($request->all()));
     }
 
     /**
@@ -40,7 +41,7 @@ class MenuController extends Controller
      */
     public function show($id)
     {
-        return Formatter::responseJSON(Menu::findRecord($id));
+        return $this->responseJSON(Menu::findRecord($id));
     }
 
 
@@ -53,7 +54,7 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return Formatter::responseJSON(Menu::updateRecord($request->all(), $id));
+        return $this->responseJSON(Menu::updateRecord($request->all(), $id));
     }
 
     /**
@@ -64,12 +65,12 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        return Formatter::responseJSON(Menu::deleteRecord($id));
+        return $this->responseJSON(Menu::deleteRecord($id));
     }
 
     public function search()
     {
-        return Formatter::responseJSON(Menu::searchByKeyword($_GET['keyword']));
+        return $this->responseJSON(Menu::searchByKeyword($_GET['keyword']));
     }
 
 }
