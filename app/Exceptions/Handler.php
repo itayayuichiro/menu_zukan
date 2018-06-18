@@ -53,9 +53,10 @@ class Handler extends ExceptionHandler
         //IDがなかった場合のエラー
         if ($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
             return $this->reponseErrorJSON('ID not found');
+        }elseif ($e instanceof \Illuminate\Database\QueryException) {
+            return $this->reponseErrorJSON($e);
+        }else{
+            return $this->reponseErrorJSON('500 Internal Server Error');
         }
-        //DB保存の際のエラー
-        if ($e instanceof \Illuminate\Database\QueryException) return $this->reponseErrorJSON($e);
-        return parent::render($request, $e);
     }
 }
