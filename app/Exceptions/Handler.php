@@ -48,17 +48,26 @@ class Handler extends ExceptionHandler
      * @param  \Exception $exception
      * @return \Illuminate\Http\Response
      */
+
     public function render($request, Exception $e)
     {
+
         //IDがなかった場合のエラー
         if ($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
             return $this->reponseErrorJSON('そのIDは存在しません。');
+        //DB更新時のエラー
         }elseif ($e instanceof \Illuminate\Database\QueryException) {
             return $this->reponseErrorJSON('データの作成/更新に失敗しました。入力した値の長さ・型を確認してください。');
+        //データベースバリデーションエラー
         }elseif ($e instanceof \Illuminate\Validation\ValidationException) {
             return parent::render($request, $e);
+        //ユーザー認証のエラー
         }elseif ($e instanceof \Illuminate\Auth\AuthenticationException) {
-            return parent::render($request, $e);
+            // redirect('home/error');
+            
+            return response()->view('errors.notauth');
+            // return parent::render($request, $e);
+        //その他のエラー
         }else{
             return $this->reponseErrorJSON('内部エラーが発生しました。');
         }
