@@ -52,11 +52,15 @@ class Handler extends ExceptionHandler
     {
         //IDがなかった場合のエラー
         if ($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
-            return $this->reponseErrorJSON('ID not found');
+            return $this->reponseErrorJSON('そのIDは存在しません。');
         }elseif ($e instanceof \Illuminate\Database\QueryException) {
-            return $this->reponseErrorJSON($e);
+            return $this->reponseErrorJSON('データの作成/更新に失敗しました。入力した値の長さ・型を確認してください。');
+        }elseif ($e instanceof \Illuminate\Validation\ValidationException) {
+            return parent::render($request, $e);
+        }elseif ($e instanceof \Illuminate\Auth\AuthenticationException) {
+            return parent::render($request, $e);
         }else{
-            return $this->reponseErrorJSON('500 Internal Server Error');
+            return $this->reponseErrorJSON('内部エラーが発生しました。');
         }
     }
 }
